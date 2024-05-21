@@ -17,8 +17,9 @@ function App() {
   }, []);
 
   function createTodo() {
+    const name = prompt("Enter a name for the new todo");
     client.models.Team.create({
-      name: window.prompt("Todo content"),
+      name: name === null ? "Untitled" : name,
     });
   }
 
@@ -35,7 +36,7 @@ function App() {
                 <button onClick={createTodo}>+ new</button>
                 <ul>
                   {todos.map((todo) => (
-                      <li key={todo.id} onClick={e => deleteTodo(todo.id)}>{todo.name}</li>
+                      <li key={todo.id} onClick={() => deleteTodo(todo.id)}>{todo.name}</li>
                   ))}
                 </ul>
                 <div>

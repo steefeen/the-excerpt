@@ -17,7 +17,7 @@ const schema = a.schema({
         .authorization(allow => [allow.publicApiKey()]),
 
     Team: a.model({
-        mantra: a.string().required(),
+        name: a.string().required(),
         // 3. Create a hasMany relationship with the reference field
         //    from the `Member`s model.
         members: a.hasMany('Member', 'teamId'),
