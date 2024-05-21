@@ -17,7 +17,14 @@ function App() {
   }, []);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    client.models.Todo.create({
+      content: window.prompt("Todo content"),
+      fields: [],
+    });
+  }
+
+  function deleteTodo(id: string) {
+    client.models.Todo.delete({id: id});
   }
 
   return (
@@ -25,11 +32,11 @@ function App() {
       <Authenticator>
           {({ signOut, user }) => (
               <main>
-                <h1>{user?.username} todos</h1>
+                <h1>{user?.signInDetails?.loginId}'s todos</h1>
                 <button onClick={createTodo}>+ new</button>
                 <ul>
                   {todos.map((todo) => (
-                      <li key={todo.id}>{todo.content}</li>
+                      <li key={todo.id} onClick={e => deleteTodo(todo.id)}>{todo.content}</li>
                   ))}
                 </ul>
                 <div>

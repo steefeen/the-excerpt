@@ -10,8 +10,16 @@ const schema = a.schema({
   Todo: a
     .model({
       content: a.string(),
+      fields: a.hasMany('Comment', 'commentId'),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  Comment: a
+      .model({
+        todo: a.belongsTo('Todo', 'todoId'),
+        content: a.string().required().default(""),
+      })
+      .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
