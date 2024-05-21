@@ -7,20 +7,17 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-    Member: a.model({
-        name: a.string().required(),
-        // 1. Create a reference field
-        teamId: a.id(),
-        // 2. Create a belongsTo relationship with the reference field
-        team: a.belongsTo('Team', 'teamId'),
+    Field: a.model({
+        type: a.string().required(),
+        content: a.string().required(),
+        postId: a.id(),
+        post: a.belongsTo('Post', 'postId'),
     })
         .authorization(allow => [allow.publicApiKey()]),
 
-    Team: a.model({
-        name: a.string().required(),
-        // 3. Create a hasMany relationship with the reference field
-        //    from the `Member`s model.
-        members: a.hasMany('Member', 'teamId'),
+    Post: a.model({
+        title: a.string().required(),
+        fields: a.hasMany('Field', 'postId'),
     })
         .authorization(allow => [allow.publicApiKey()]),
 });

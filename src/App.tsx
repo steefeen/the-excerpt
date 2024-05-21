@@ -8,23 +8,21 @@ import '@aws-amplify/ui-react/styles.css'
 const client = generateClient<Schema>();
 
 function App() {
-  const [todos, setTodos] = useState<Array<Schema["Team"]["type"]>>([]);
+  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
   useEffect(() => {
-    client.models.Team.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
+    client.models.Post.list().then((res) => setPosts(res.data));
   }, []);
 
   function createTodo() {
     const name = prompt("Enter a name for the new todo");
-    client.models.Team.create({
-      name: name === null ? "Untitled" : name,
+    client.models.Post.create({
+        title: name === null ? "Untitled" : name,
     });
   }
 
   function deleteTodo(id: string) {
-    client.models.Team.delete({id: id});
+    client.models.Post.delete({id: id});
   }
 
   return (
@@ -35,8 +33,8 @@ function App() {
                 <h1>{user?.signInDetails?.loginId}'s todos</h1>
                 <button onClick={createTodo}>+ new</button>
                 <ul>
-                  {todos.map((todo) => (
-                      <li key={todo.id} onClick={() => deleteTodo(todo.id)}>{todo.name}</li>
+                  {posts.map((post) => (
+                      <li key={post.id} onClick={() => deleteTodo(post.id)}>{post.title}</li>
                   ))}
                 </ul>
                 <div>
