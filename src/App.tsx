@@ -8,45 +8,33 @@ import '@aws-amplify/ui-react/styles.css'
 const client = generateClient<Schema>();
 
 function App() {
-  const [todos, setTodos] = useState<Schema["Todo"]["type"][]>([]);
-
-  const fetchTodos = async () => {
-    const { data: items } = await client.models.Todo.list();
-    setTodos(items);
-  };
+  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
   useEffect(() => {
-    fetchTodos();
+    client.models.Post.list().then((res) => setPosts(res.data));
   }, []);
 
-  useEffect(() => {
-    const sub = client.models.Todo.observeQuery().subscribe({
-      next: ({ items }) => {
-        setTodos([...items]);
-      },
+  function createTodo() {
+    const name = prompt("Enter a name for the new todo");
+    client.models.Post.create({
+        title: name === null ? "Untitled" : name,
     });
+  }
 
-    return () => sub.unsubscribe();
-  }, []);
+  function deleteTodo(id: string) {
+    client.models.Post.delete({id: id});
+  }
 
-  const createTodo = async () => {
-    await client.models.Todo.create({
-      content: window.prompt("Todo content?"),
-      isDone: false,
-    });
-    // no more manual refetchTodos required!
-    // - fetchTodos()
-  };
   return (
 
       <Authenticator>
           {({ signOut, user }) => (
               <main>
                 <h1>{user?.signInDetails?.loginId}'s todos</h1>
-                <button onClick={createTodo}>Add new todo</button>
+                <button onClick={createTodo}>+ new</button>
                 <ul>
-                  {todos.map(({id, content}) => (
-                      <li key={id}>{content}</li>
+                  {posts.map((post) => (
+                      <li key={post.id} onClick={() => deleteTodo(post.id)}>{post.title}</li>
                   ))}
                 </ul>
                 <div>
