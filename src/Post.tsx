@@ -74,17 +74,17 @@ export default function Post() {
         client.models.Field.delete({id: id});
     }
 
-    const [files, setFiles] = useState([]);
-    const hiddenInput = useRef(null);
-    const acceptedFileTypes = ['image/png', 'image/jpeg'];
-
-    const onFilePickerChange = (event) => {
-        const { files } = event.target;
-        if (!files || files.length === 0) {
-            return;
-        }
-        setFiles(Array.from(files));
-    };
+    // const [files, setFiles] = useState([]);
+    // const hiddenInput = useRef(null);
+    // const acceptedFileTypes = ['image/png', 'image/jpeg'];
+    //
+    // const onFilePickerChange = (event) => {
+    //     const { files } = event.target;
+    //     if (!files || files.length === 0) {
+    //         return;
+    //     }
+    //     setFiles(Array.from(files));
+    // };
 
     return (
         <div id="post">
@@ -149,32 +149,32 @@ export default function Post() {
                     </Card>
 
                     <Card>
-                        <DropZone
-                            acceptedFileTypes={acceptedFileTypes}
-                            onDropComplete={({ acceptedFiles, rejectedFiles }) => {
-                                setFiles(acceptedFiles);
-                            }}
-                        >
-                            <Flex direction="column" alignItems="center">
-                                <Text>Drag images here or</Text>
-                                <Button size="small" onClick={() => hiddenInput.current.click()}>
-                                    Browse
-                                </Button>
-                            </Flex>
-                            <VisuallyHidden>
-                                <input
-                                    type="file"
-                                    tabIndex={-1}
-                                    ref={hiddenInput}
-                                    onChange={onFilePickerChange}
-                                    multiple={true}
-                                    accept={acceptedFileTypes.join(',')}
-                                />
-                            </VisuallyHidden>
-                        </DropZone>
-                        {files.map((file) => (
-                            <Text key={file.name}>{file.name}</Text>
-                        ))}
+                        {/*<DropZone*/}
+                        {/*    acceptedFileTypes={acceptedFileTypes}*/}
+                        {/*    onDropComplete={({ acceptedFiles, rejectedFiles }) => {*/}
+                        {/*        setFiles(acceptedFiles);*/}
+                        {/*    }}*/}
+                        {/*>*/}
+                        {/*    <Flex direction="column" alignItems="center">*/}
+                        {/*        <Text>Drag images here or</Text>*/}
+                        {/*        <Button size="small" onClick={() => hiddenInput.current.click()}>*/}
+                        {/*            Browse*/}
+                        {/*        </Button>*/}
+                        {/*    </Flex>*/}
+                        {/*    <VisuallyHidden>*/}
+                        {/*        <input*/}
+                        {/*            type="file"*/}
+                        {/*            tabIndex={-1}*/}
+                        {/*            ref={hiddenInput}*/}
+                        {/*            onChange={onFilePickerChange}*/}
+                        {/*            multiple={true}*/}
+                        {/*            accept={acceptedFileTypes.join(',')}*/}
+                        {/*        />*/}
+                        {/*    </VisuallyHidden>*/}
+                        {/*</DropZone>*/}
+                        {/*{files.map((file) => (*/}
+                        {/*    <Text key={file.name}>{file.name}</Text>*/}
+                        {/*))}*/}
 
                         <Flex direction="row"  justifyContent="space-between" style={{marginTop: "8px"}}>
                             <Input
