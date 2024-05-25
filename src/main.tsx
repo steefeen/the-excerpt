@@ -5,10 +5,35 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 
-Amplify.configure(outputs);
+import {loader as contactLoader} from "./Post.tsx";
+
+    Amplify.configure(outputs);
+
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
+import ErrorPage from "./ErrorPage.tsx";
+import Post from "./Post.tsx";
+
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: "post/:postId",
+                element: <Post />,
+                loader: contactLoader,
+            },
+        ],
+    },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+      <RouterProvider router={router} />
   </React.StrictMode>
 );

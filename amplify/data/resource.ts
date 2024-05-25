@@ -10,7 +10,7 @@ const schema = a.schema({
     Field: a.model({
         type: a.string().required(),
         content: a.string().required(),
-        postId: a.id(),
+        postId: a.id().required(),
         post: a.belongsTo('Post', 'postId'),
     })
         .authorization(allow => [allow.publicApiKey()]),
