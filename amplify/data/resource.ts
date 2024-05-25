@@ -10,6 +10,7 @@ const schema = a.schema({
     Field: a.model({
         type: a.string().required(),
         content: a.string().required(),
+        title: a.string().required(),
         postId: a.id().required(),
         post: a.belongsTo('Post', 'postId'),
     })
