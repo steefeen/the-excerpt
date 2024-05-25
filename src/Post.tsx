@@ -3,10 +3,7 @@ import {generateClient} from "aws-amplify/api";
 import type {Schema} from "../amplify/data/resource.ts";
 import {
     Button,
-    DropZone,
     Flex,
-    Text,
-    VisuallyHidden,
     Card,
     Heading,
     ScrollView,
@@ -16,13 +13,14 @@ import {
     TableHead,
     TableRow, Input
 } from "@aws-amplify/ui-react";
-import {useEffect, useRef, useState} from "react";
-// @ts-ignore
+import {useEffect, useState} from "react";
+// @ts-expect-error
 import {FieldCreateForm} from "../ui-components";
 
 const client = generateClient<Schema>();
 
 
+// @ts-expect-error
 export async function loader({ params }) {
     const p = await client.models.Post.get({ id: params.postId });
     const post = p.data
@@ -30,6 +28,7 @@ export async function loader({ params }) {
 }
 
 export default function Post() {
+    // @ts-expect-error
     const { post } = useLoaderData();
 
     const [fields, setFields] = useState<Array<Schema["Field"]["type"]>>([]);
@@ -67,6 +66,7 @@ export default function Post() {
 
 
     useEffect(() => {
+        // @ts-expect-error
         post.fields().then(data => setFields(data.data));
     }, [post]);
 
