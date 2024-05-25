@@ -5,9 +5,8 @@ import { generateClient } from "aws-amplify/data";
 import {Authenticator, Divider, ScrollView, SearchField,} from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 
-// @ts-expect-error
-import {PostCreateForm} from '../ui-components';
 import {Link, Outlet} from "react-router-dom";
+import PostCreateForm from '../ui-components/PostCreateForm';
 
 const client = generateClient<Schema>();
 

@@ -15,7 +15,7 @@ import {
 } from "@aws-amplify/ui-react";
 import {useEffect, useState} from "react";
 // @ts-expect-error
-import {FieldCreateForm} from "../ui-components";
+import FieldCreateForm from '../ui-components/FieldCreateForm';
 
 const client = generateClient<Schema>();
 
