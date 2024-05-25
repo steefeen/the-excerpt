@@ -19,8 +19,17 @@ const schema = a.schema({
     Post: a.model({
         title: a.string().required(),
         fields: a.hasMany('Field', 'postId'),
+        folderId: a.id(),
+        folder: a.belongsTo('Folder', 'folderId'),
     })
         .authorization(allow => [allow.publicApiKey()]),
+
+    Folder: a.model({
+        title: a.string().required(),
+        fields: a.hasMany('Post', 'folderId'),
+    })
+        .authorization(allow => [allow.publicApiKey()]),
+
 });
 
 export type Schema = ClientSchema<typeof schema>;

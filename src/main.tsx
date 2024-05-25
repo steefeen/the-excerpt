@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import ErrorPage from "./ErrorPage.tsx";
 import Post from "./Post.tsx";
+import User from "./User.tsx";
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
                 path: "post/:postId",
                 element: <Post />,
                 loader: contactLoader,
+            },
+            {
+                path: "/user/:userId",
+                element: <User />,
+                errorElement: <ErrorPage />,
             },
         ],
     },

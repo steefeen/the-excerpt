@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     client.models.Post.list().then((res) => {
       setPosts(res.data)
-      //setSelectedPost(res.data[0]);
     });
   }, []);
 
@@ -38,18 +37,19 @@ function App() {
           {({ signOut, user }) => (
 
               <>
-                {/*<h1>{user?.signInDetails?.loginId}'s todos</h1>*/}
                 <div id="sidebar">
                   <h1>
-                    <span>{user?.userId}</span>
+                    <Link to={'user/' + user?.userId}>{user?.userId}</Link>
                     <button onClick={signOut}>Sign out</button>
                   </h1>
+
                   <div>
                     <SearchField
                         label="Search"
                         placeholder="Search here..."
                     />
                   </div>
+
                   <nav>
                   <ScrollView>
 
@@ -64,22 +64,16 @@ function App() {
 
                     <div style={{height: "16px"}}></div>
                   </ScrollView>
-                    {/*<ul>*/}
-                    {/*  {posts.map((post) => (*/}
-                    {/*      <PostList key={post.id} post={post}/>*/}
-                    {/*  ))}*/}
-                    {/*</ul>*/}
-
                   </nav>
+
                   <Divider/>
+
                   <PostCreateForm/>
                 </div>
+
                 <div id="detail">
                   <Outlet />
                 </div>
-
-
-
 
                 {/*<section>*/}
                 {/*  <SelectField*/}
@@ -99,9 +93,6 @@ function App() {
                 {/*        </option>*/}
                 {/*    ))}*/}
                 {/*  </SelectField>*/}
-
-
-
                 {/*</section>*/}
 
               </>
