@@ -14,12 +14,13 @@ import {
     TableRow, Input
 } from "@aws-amplify/ui-react";
 import {useEffect, useState} from "react";
-// @ts-expect-error
-import FieldCreateForm from '../ui-components/FieldCreateForm';
+
+import FieldCreateForm, {FieldCreateFormInputValues} from '../ui-components/FieldCreateForm';
 
 const client = generateClient<Schema>();
 
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 export async function loader({ params }) {
     const p = await client.models.Post.get({ id: params.postId });
@@ -28,6 +29,7 @@ export async function loader({ params }) {
 }
 
 export default function Post() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const { post } = useLoaderData();
 
@@ -66,6 +68,7 @@ export default function Post() {
 
 
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         post.fields().then(data => setFields(data.data));
     }, [post]);
@@ -141,8 +144,8 @@ export default function Post() {
                     </Card>
                     <Card>
                         <FieldCreateForm
-                            onSubmit={(fields: Schema["Field"]["type"]) => {
-                                fields.postId = post.id
+                            onSubmit={(fields: FieldCreateFormInputValues) => {
+                                (fields as Schema["Field"]["type"]).postId = post.id
                                 return fields
                             }}
                         />

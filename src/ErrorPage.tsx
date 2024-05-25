@@ -6,9 +6,9 @@ interface RouteError {
         columnNumber: number;
         fileName: string;
         lineNumber: number;
-        message: string;
+        message: string | undefined;
         stack: string;
-    };
+    } | undefined;
     internal: boolean;
     status: number;
     statusText: string;
@@ -24,7 +24,7 @@ export default function ErrorPage() {
             <h1>Oops!</h1>
             <p>Sorry, an unexpected error has occurred.</p>
             <p>
-                <i>{error.statusText || error.error.message}</i>
+                <i>{error.statusText || error.error?.message || JSON.stringify(error)}</i>
             </p>
         </div>
     );
