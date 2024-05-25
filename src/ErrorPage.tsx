@@ -4,6 +4,7 @@ export default function ErrorPage() {
     const error = useRouteError();
     console.error(error);
 
+    // @ts-expect-error
     return (
         <div id="error-page">
             <h1>Oops!</h1>
