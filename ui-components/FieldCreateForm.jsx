@@ -1,7 +1,13 @@
 /* eslint-disable */
 "use client";
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createField } from "./graphql/mutations";
@@ -119,10 +125,10 @@ export default function FieldCreateForm(props) {
       {...getOverrideProps(overrides, "FieldCreateForm")}
       {...rest}
     >
-      <TextField
+      <SelectField
         label="Type"
-        isRequired={true}
-        isReadOnly={false}
+        placeholder="Please select an option"
+        isDisabled={false}
         value={type}
         onChange={(e) => {
           let { value } = e.target;
@@ -144,7 +150,18 @@ export default function FieldCreateForm(props) {
         errorMessage={errors.type?.errorMessage}
         hasError={errors.type?.hasError}
         {...getOverrideProps(overrides, "type")}
-      ></TextField>
+      >
+        <option
+          children="Text"
+          value="TEXT"
+          {...getOverrideProps(overrides, "typeoption0")}
+        ></option>
+        <option
+          children="Image"
+          value="IMAGE"
+          {...getOverrideProps(overrides, "typeoption1")}
+        ></option>
+      </SelectField>
       <TextField
         label="Content"
         isRequired={true}

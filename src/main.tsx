@@ -5,9 +5,7 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 
-import {loader as contactLoader} from "./Post.tsx";
-
-    Amplify.configure(outputs);
+Amplify.configure(outputs);
 
 import {
     createBrowserRouter,
@@ -16,6 +14,7 @@ import {
 import ErrorPage from "./ErrorPage.tsx";
 import Post from "./Post.tsx";
 import User from "./User.tsx";
+import {loader as contactLoader} from "./Loader.tsx";
 
 
 const router = createBrowserRouter([

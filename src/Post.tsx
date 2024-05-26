@@ -1,32 +1,25 @@
-import { useLoaderData } from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
 import {generateClient} from "aws-amplify/api";
 import type {Schema} from "../amplify/data/resource.ts";
 import {
     Button,
-    Flex,
     Card,
+    Flex,
     Heading,
+    Input,
     ScrollView,
     Table,
     TableBody,
     TableCell,
     TableHead,
-    TableRow, Input
+    TableRow
 } from "@aws-amplify/ui-react";
 import {useEffect, useState} from "react";
 
 import FieldCreateForm, {FieldCreateFormInputValues} from '../ui-components/FieldCreateForm';
+import Field from "./Field.tsx";
 
 const client = generateClient<Schema>();
-
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-export async function loader({ params }) {
-    const p = await client.models.Post.get({ id: params.postId });
-    const post = p.data
-    return { post };
-}
 
 export default function Post() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -73,9 +66,6 @@ export default function Post() {
         post.fields().then(data => setFields(data.data));
     }, [post]);
 
-    function deleteField(id: string) {
-        client.models.Field.delete({id: id});
-    }
 
     // const [files, setFiles] = useState([]);
     // const hiddenInput = useRef(null);
@@ -117,27 +107,14 @@ export default function Post() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell as="th">Überschrift</TableCell>
+                                    <TableCell as="th" style={{width: "100px"}}>Typ</TableCell>
                                     <TableCell as="th">Inhalt</TableCell>
                                     <TableCell as="th" style={{width: "100px"}}></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {fields.map(field => (
-                                    <TableRow key={field.id}>
-                                        <TableCell>
-                                            {field.type}
-                                        </TableCell>
-                                        <TableCell>{field.content}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                loadingText=""
-                                                onClick={() => deleteField(field.id)}
-                                            >
-                                                Löschen
-                                            </Button>
-                                        </TableCell>
-
-                                    </TableRow>
+                                    <Field key={field.id} field={field}/>
                                 ))}
                             </TableBody>
                         </Table>
